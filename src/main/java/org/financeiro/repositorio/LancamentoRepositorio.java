@@ -25,21 +25,36 @@ public class LancamentoRepositorio {
 		manager.remove(objeto);
 	}
 	
+	public void update(Lancamento newObjeto) {
+		//Lancamento oldObjeto = manager.find(Lancamento.class, newObjeto.getId());
+		System.out.println("////////////////////////");
+		System.out.println(newObjeto);
+		manager.merge(newObjeto);
+		
+	}
+	
 	public List<Lancamento> getAllLancamentos(User user) {
 		TypedQuery<Lancamento> query = manager.createQuery("select c from Lancamento c where user_login = ?1 ", Lancamento.class);
 		query.setParameter(1, user.getLogin());
 		return query.getResultList();
 	}
 	
-	public List<Lancamento> getLancamentoTipo(String tipo) {
-		TypedQuery<Lancamento> query = manager.createQuery("select c from Lancamento c where tipo = ?1 ", Lancamento.class);
-		query.setParameter(1, tipo);
+	public List<Lancamento> getLancamentoTipo(String tipo, User user) {
+		TypedQuery<Lancamento> query = manager.createQuery("select c from Lancamento c where tipo = ?1 and user_login = ?2", Lancamento.class);
+		query.setParameter(1, tipo).setParameter(2, user.getLogin());
 		return query.getResultList();
 	}
 	
-	public List<Lancamento> getLancamentoData(String data) {
-		TypedQuery<Lancamento> query = manager.createQuery("select c from Lancamento c where data = ?1 ", Lancamento.class);
-		query.setParameter(1, data);
+	public List<Lancamento> getLancamentoData(String mes, String ano, User user) {
+		String inicio = ano+"-"+mes+"-01";
+		String fim = ano+"-"+mes+"-31";
+		
+		System.out.println("////////////////////////");
+		System.out.println(inicio);
+		System.out.println(fim);
+		
+		TypedQuery<Lancamento> query = manager.createQuery("select c from Lancamento c where data between ?1 AND ?2 AND  user_login=?3", Lancamento.class);
+		query.setParameter(1, inicio).setParameter(2,fim).setParameter(3, user.getLogin());
 		return query.getResultList();
 	}
 }

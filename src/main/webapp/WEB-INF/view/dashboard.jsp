@@ -51,31 +51,40 @@
 	</nav>
 	
 	<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#listarLancamentoTipo">
-	  Listar tipo
+	  LISTAR TIPO
 	</button>
 	
 	<a href="dashboard"><button type="button" class="btn btn-primary">
-	  ver tudo
+	  VER TUDO
 	</button>
 	</a>
 	
+	<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#listarLancamentoData">
+	  LISTAR DATA
+	</button>
+	
 	<div class="container">
   		<div class="row">
+  		
+  		
+  		
+			<!-- <div class="col-sm d-flex align-items-center justify-content-center">
+			
 			<div class="col-sm">
-				<div class="container text-center">
-					<br><h1>Total</h1>
-					<div class="my-auto">
-							asdsadasdas
+				<div class="container text-center mt-5-4">
+					<br><h1>Lancamentos</h1>
+					<div class="row justify-content-center">
+					<h3>valores: R$ 11</h3>
 					</div>
 				</div>
 			</div>
+  		-->
   		
   		
   		
   		
   		
-  		
-  			<div class="col-lg">
+  			<div class="col-sm">
 		         <!-- CONTAINER CENTRAL DA TABLE -->
 		        <div class="container text-center">
 				<br><h1>Lancamentos</h1>
@@ -86,16 +95,17 @@
 						</button>
 						<table class="table table-striped table-responsive">
 							<thead>
-								<!-- <tr>
+								 <!--  <tr>
 									<th class="text-center" scope="col" colspan="6">Lancamentos</th>
-								</tr> -->
-								<tr>
+								</tr> 
+								<tr>-->
 				                	<th scope="col"></th>
 									<th scope="col">Tipo</th>
 									<th scope="col">Valor</th>
 									<th scope="col">Data</th>
 									<th scope="col">Observacao</th>
 									<th scope="col">Excluir</th>
+									<th scope="col">Alterar</th>
 				                </tr>
 							</thead>
 							<tbody>
@@ -106,8 +116,140 @@
 									<td class='align-middle'>${lancamento.valor}</td>
 									<td class='align-middle'>${lancamento.data}</td>
 									<td class='align-middle'>${lancamento.observacao}</td>
-									<td class='align-middle'><a href=excluirLancamento?lancamento=${lancamento.id}><button type='button' class='btn btn-default'><span class='material-icons'>clear</span></button></td></a>
+									<td class='align-middle'><button type='button'
+										class='btn btn-default' data-toggle='modal'
+										data-target='#lancamentoDelete${lancamento.id}'>
+										<span class='material-icons'>clear</span>
+									</button></td>
+									<td class='align-middle'><button type='button'
+										class='btn btn-default' data-toggle='modal'
+										data-target='#lancamentoUpdate${lancamento.id}'>
+										<span class='material-icons'>settings</span>
+									</button></td>
 									</tr>
+									
+									
+									
+								 <!-- MODAL EXCLUIR LANCAMENTO -->
+									<div class="modal fade" id="lancamentoDelete${lancamento.id}" tabindex="-1" role="dialog" aria-labelledby="deleteLancamento" aria-hidden="true">
+								   		<div class="modal-dialog" role="document">
+									         <div class="modal-content">
+									             <div class="modal-header">
+									                 <h5 class="modal-title" id="deleteLancamento">Excluir Lancamento</h5>
+									                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+									                 <span aria-hidden="true">&times;</span>
+									                 </button>
+									             </div>
+									             <div class="modal-body">
+									                 <!--Form lancamento -->
+									                     <div class="form-group">
+									                         <label for="tipo">tipo</label>
+									                         <input type="text" class="form-control" id="tipo" name="tipo" value="${lancamento.tipo}" readonly>
+									                     </div>
+									                     <div class="form-group">
+									                         <label for="valor">Valor</label>
+									                         <input type="number" class="form-control" id="valor" name="valor" value="${lancamento.valor}" readonly>
+									                     </div>
+									                     <div class="form-group">
+									                         <label for="data">data</label>
+									                         <input type="date" class="form-control" id="data" name="data" placeholder="data" value="${lancamento.data}" readonly>
+									                     </div>
+									                     <div class="form-group">
+									                         <label for="observacao">observacao</label>
+									                         <input type="text" class="form-control" id="observacao" name="observacao" value="${lancamento.observacao}" readonly>
+									                     </div>
+									
+									             </div>
+									             <div class="modal-footer">
+									                     <button type="reset" id="Cancelar" class="btn btn-secondary">Limpar</button>
+									                     <a href=excluirLancamento?lancamento=${lancamento.id}><button type="button" class="btn btn-primary">Excluir lancamento</button></a>
+									             </div>
+									         </div>
+								           </div>
+								         </div>
+									
+									
+									
+									
+									<!-- MODAL UPDATE LANCAMENTO -->
+									<div class="modal fade" id="lancamentoUpdate${lancamento.id}" tabindex="-1" role="dialog" aria-labelledby="updateLancamento" aria-hidden="true">
+								   		<div class="modal-dialog" role="document">
+									         <div class="modal-content">
+									             <div class="modal-header">
+									                 <h5 class="modal-title" id="updateLancamento">Alterar Lancamento</h5>
+									                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+									                 <span aria-hidden="true">&times;</span>
+									                 </button>
+									             </div>
+									             <div class="modal-body">
+									             <form class="signup" method=post action=alterarLancamento>
+									                 <!--Form lancamento -->
+									                 	<div class="form-group">
+									                         <input type="hidden" class="form-control" id="id" name="id" value="${lancamento.id}">
+									                     </div>
+									                 
+									                     <div class="input-group mb-3">
+															  <div class="input-group-prepend">
+															    <label class="input-group-text" for="inputGroupSelect01">Tipo de lancamento</label>
+															  </div>
+															  <select name="tipo" class="custom-select" id="inputGroupSelect01">
+															  <c:choose>
+															    <c:when test="${lancamento.tipo=='credito'}">
+															        <option value="credito" selected>credito</option>
+															    	<option value="debito">debito</option>
+															    </c:when>    
+															    <c:otherwise>
+															       <option value="credito">credito</option>
+															       <option value="debito" selected>debito</option>
+															    </c:otherwise>
+															  </c:choose>
+															  
+															  
+															  
+															    
+															  </select>
+														 </div>
+									                     <div class="form-group">
+									                         <label for="valor">Valor</label>
+									                         <input type="number" class="form-control" id="valor" name="valor" value="${lancamento.valor}">
+									                     </div>
+									                     <div class="form-group">
+									                         <label for="data">data</label>
+									                         <input type="date" class="form-control" id="data" name="data" placeholder="data" value="${lancamento.data}">
+									                     </div>
+									                     <div class="form-group">
+									                         <label for="observacao">observacao</label>
+									                         <input type="text" class="form-control" id="observacao" name="observacao" value="${lancamento.observacao}">
+									                     </div>
+									
+									             </div>
+									             <div class="modal-footer">
+									                     <button type="reset" id="Cancelar" class="btn btn-secondary">Limpar</button>
+									                     <button type="submit" class="btn btn-primary">Alterar lancamento</button>
+									             	</form>
+									             </div>
+									         </div>
+								           </div>
+								         </div>
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
 								</c:forEach>
 							</tbody>
 						</table>
@@ -139,18 +281,18 @@
 	                 <!--Form Animal -->
 	                 <form class="signup" method=post action=cadastrarLancamento>
 	                     <div class="input-group mb-3">
-						  <div class="input-group-prepend">
-						    <label class="input-group-text" for="inputGroupSelect01">Tipo de lancamento</label>
-						  </div>
-						  <select name="tipo" class="custom-select" id="inputGroupSelect01">
-						    <option selected>Escolha...</option>
-						    <option value="credito">credito</option>
-						    <option value="debito">debito</option>
-						  </select>
-						</div>
+							  <div class="input-group-prepend">
+							    <label class="input-group-text" for="inputGroupSelect01">Tipo de lancamento</label>
+							  </div>
+							  <select name="tipo" class="custom-select" id="inputGroupSelect01">
+							    <option selected>Escolha...</option>
+							    <option value="credito">credito</option>
+							    <option value="debito">debito</option>
+							  </select>
+						 </div>
 	                     <div class="form-group">
 	                         <label for="valor">Valor</label>
-	                         <input type="text" class="form-control" id="valor" name="valor" placeholder="valor" required>
+	                         <input type="number" class="form-control" id="valor" name="valor" placeholder="valor" step=".01" required>
 	                     </div>
 	                     <div class="form-group">
 	                         <label for="data">data</label>
@@ -172,9 +314,25 @@
          </div>
          
          
+         
+         
+         
+         
+         
+   
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
          <!-- MODAL LISTAR TIPO LANCAMENTO -->
          <div class="modal fade" id="listarLancamentoTipo" tabindex="-1" role="dialog" aria-labelledby="listarLancamentoTipo" aria-hidden="true">
-   		<div class="modal-dialog" role="document">
+   			<div class="modal-dialog" role="document">
 	         <div class="modal-content">
 	             <div class="modal-header">
 	                 <h5 class="modal-title" id="listarTipoLancamento">Listar tipo lancamento</h5>
@@ -185,10 +343,67 @@
 	             <div class="modal-body">
 	                 <!--Form Animal -->
 	                 <form class="signup" method=post action=listarLancamento>
-	                     <div class="form-group">
-	                         <label for="tipo">Tipo</label>
-	                         <input type="text" class="form-control" id="tipo" name="tipo" placeholder="tipo">
-	                     </div>	
+	                     <div class="input-group mb-3">
+							  <div class="input-group-prepend">
+							    <label class="input-group-text" for="inputGroupSelect01">Tipo de lancamento</label>
+							  </div>
+							  <select name="tipo" class="custom-select" id="inputGroupSelect01">
+							    <option selected>Escolha...</option>
+							    <option value="credito">credito</option>
+							    <option value="debito">debito</option>
+							  </select>
+						 </div>	
+	             </div>
+	             <div class="modal-footer">
+	                     <button type="reset" id="Cancelar" class="btn btn-secondary">Limpar</button>
+	                     <button type="submit" class="btn btn-primary">Listar tipo lancamento</button>
+	                 </form>
+	             </div>
+	         </div>
+           </div>
+         </div>
+         
+         
+         
+         
+         
+          <!-- MODAL LISTAR DATA LANCAMENTO -->
+         <div class="modal fade" id="listarLancamentoData" tabindex="-1" role="dialog" aria-labelledby="listarLancamentoData" aria-hidden="true">
+   			<div class="modal-dialog" role="document">
+	         <div class="modal-content">
+	             <div class="modal-header">
+	                 <h5 class="modal-title" id="listarLancamentoData">Listar data lancamento</h5>
+	                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+	                 <span aria-hidden="true">&times;</span>
+	                 </button>
+	             </div>
+	             <div class="modal-body">
+	                 <!--Form Animal -->
+	                 <form class="signup" method=post action=listarLancamentoData>
+	                     <div class="input-group mb-3">
+							  <div class="input-group-prepend">
+							    <label class="input-group-text" for="inputGroupSelect01">Mes</label>
+							  </div>
+							  <select name="mes" class="custom-select" id="inputGroupSelect01">
+							    <option selected>Escolha...</option>
+							    <option value="01">JAN</option>
+							    <option value="02">FEV</option>
+							    <option value="03">MAR</option>
+							    <option value="04">ABR</option>
+							    <option value="05">MAI</option>
+							    <option value="06">JUN</option>
+							    <option value="07">JUL</option>
+							    <option value="08">AGO</option>
+							    <option value="09">SET</option>
+							    <option value="10">OUT</option>
+							    <option value="11">NOV</option>
+							    <option value="12">DEZ</option>
+							  </select>
+						 </div>	
+						 <div class="form-group">
+	                         <label for="ano">Ano</label>
+	                         <input type="number" class="form-control" id="ano" name="ano" min="1900" max="2099" step="1"  required>
+	                     </div>
 	             </div>
 	             <div class="modal-footer">
 	                     <button type="reset" id="Cancelar" class="btn btn-secondary">Limpar</button>

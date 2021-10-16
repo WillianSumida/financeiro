@@ -49,7 +49,19 @@ public class CadastroLancamentoControle {
 	public String listarTipoLancamento(String tipo, Model model, HttpServletRequest request) {
 		String login = getCookieValue("cookie", "unknown", request);
 		model.addAttribute("login" , login);
-		model.addAttribute("lancamentos", lancamentoRepositorio.getLancamentoTipo(tipo));
+		model.addAttribute("lancamentos", lancamentoRepositorio.getLancamentoTipo(tipo, userRepositorio.getUsuario(login)));
+		
+		return "dashboard";
+	}
+	
+	@Transactional
+	@RequestMapping(value = "listarLancamentoData", method=RequestMethod.POST)
+	public String listarDataLancamento(String mes, String ano, Model model, HttpServletRequest request) {
+		String login = getCookieValue("cookie", "unknown", request);
+		
+		
+		model.addAttribute("login" , login);
+		model.addAttribute("lancamentos", lancamentoRepositorio.getLancamentoData(mes, ano, userRepositorio.getUsuario(login)));
 		
 		return "dashboard";
 	}
@@ -61,6 +73,19 @@ public class CadastroLancamentoControle {
 		String login = getCookieValue("cookie", "unknown", request);
 		model.addAttribute("login" , login);
 		return "redirect:dashboard";	
+	}
+	
+	@Transactional
+	@RequestMapping(value = "alterarLancamento", method=RequestMethod.POST)
+	public String alterar(Lancamento lancamento, Model model, HttpServletRequest request) {
+		String login = getCookieValue("cookie", "unknown", request);
+		lancamento.setUser(userRepositorio.getUsuario(login));
+		lancamentoRepositorio.update(lancamento);
+
+		model.addAttribute("login" , login);
+		model.addAttribute("lancamentos", lancamentoRepositorio.getAllLancamentos(userRepositorio.getUsuario(login)));
+	
+		return "dashboard";
 	}
 	
 	public static String getCookieValue(String cookieName,  String defaultValue, HttpServletRequest request) {
