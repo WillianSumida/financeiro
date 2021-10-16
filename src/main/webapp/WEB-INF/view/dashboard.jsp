@@ -41,7 +41,7 @@
 
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  		<a class="navbar-brand">Seja bem vindo (a), ${sessionScope.usuario.login}</a>
+  		<a class="navbar-brand">Seja bem vindo (a), ${login}</a>
 	     <span class="navbar-text ml-auto">
 	       <div class="align-items-center">
            		<a href=logout><span class='material-icons'>exit_to_app</span></a>
@@ -49,11 +49,6 @@
            
          </span>
 	</nav>
-	
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertLancamento">
-	  Inserir
-	</button>
-	
 	
 	<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#listarLancamentoTipo">
 	  Listar tipo
@@ -64,6 +59,73 @@
 	</button>
 	</a>
 	
+	<div class="container">
+  		<div class="row">
+			<div class="col-sm">
+				<div class="container text-center">
+					<br><h1>Total</h1>
+					<div class="my-auto">
+							asdsadasdas
+					</div>
+				</div>
+			</div>
+  		
+  		
+  		
+  		
+  		
+  		
+  			<div class="col-lg">
+		         <!-- CONTAINER CENTRAL DA TABLE -->
+		        <div class="container text-center">
+				<br><h1>Lancamentos</h1>
+				<div class="row justify-content-center">
+		    		<div class="col-auto">
+		    			<button type="button"class="btn btn-success col-md-12" data-toggle="modal" data-target="#insertLancamento">
+						  Novo Lancamento
+						</button>
+						<table class="table table-striped table-responsive">
+							<thead>
+								<!-- <tr>
+									<th class="text-center" scope="col" colspan="6">Lancamentos</th>
+								</tr> -->
+								<tr>
+				                	<th scope="col"></th>
+									<th scope="col">Tipo</th>
+									<th scope="col">Valor</th>
+									<th scope="col">Data</th>
+									<th scope="col">Observacao</th>
+									<th scope="col">Excluir</th>
+				                </tr>
+							</thead>
+							<tbody>
+								<c:forEach var="lancamento" items="${lancamentos}" varStatus="contador">
+									<tr>
+									<th class='align-middle' scope='row'>${contador.count}</th>
+									<td class='align-middle'>${lancamento.tipo}</td>
+									<td class='align-middle'>${lancamento.valor}</td>
+									<td class='align-middle'>${lancamento.data}</td>
+									<td class='align-middle'>${lancamento.observacao}</td>
+									<td class='align-middle'><a href=excluirLancamento?lancamento=${lancamento.id}><button type='button' class='btn btn-default'><span class='material-icons'>clear</span></button></td></a>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- MODAL INSERIR LANCAMENTO -->
 	<div class="modal fade" id="insertLancamento" tabindex="-1" role="dialog" aria-labelledby="insertLancamento" aria-hidden="true">
    		<div class="modal-dialog" role="document">
 	         <div class="modal-content">
@@ -76,21 +138,23 @@
 	             <div class="modal-body">
 	                 <!--Form Animal -->
 	                 <form class="signup" method=post action=cadastrarLancamento>
-	                     <div class="form-group">
-	                         <label for="id">Id</label>
-	                         <input type="number" class="form-control" id="id" name="id" placeholder="Id">
-	                     </div>
-	                     <div class="form-group">
-	                         <label for="tipo">Tipo</label>
-	                         <input type="text" class="form-control" id="tipo" name="tipo" placeholder="tipo">
-	                     </div>
+	                     <div class="input-group mb-3">
+						  <div class="input-group-prepend">
+						    <label class="input-group-text" for="inputGroupSelect01">Tipo de lancamento</label>
+						  </div>
+						  <select name="tipo" class="custom-select" id="inputGroupSelect01">
+						    <option selected>Escolha...</option>
+						    <option value="credito">credito</option>
+						    <option value="debito">debito</option>
+						  </select>
+						</div>
 	                     <div class="form-group">
 	                         <label for="valor">Valor</label>
-	                         <input type="text" class="form-control" id="valor" name="valor" placeholder="valor">
+	                         <input type="text" class="form-control" id="valor" name="valor" placeholder="valor" required>
 	                     </div>
 	                     <div class="form-group">
 	                         <label for="data">data</label>
-	                         <input type="text" class="form-control" id="data" name="data" placeholder="data">
+	                         <input type="date" class="form-control" id="data" name="data" placeholder="data" required>
 	                     </div>
 	                     <div class="form-group">
 	                         <label for="observacao">observacao</label>
@@ -134,46 +198,6 @@
 	         </div>
            </div>
          </div>
-         
-         
-         
-        <div class="container text-center">
-		<br><h1>Lancamentos</h1>
-		<div class="row justify-content-center">
-    		<div class="col-auto">
-				<table class="table table-striped table-responsive">
-					<thead>
-						<tr>
-							<th class="text-center" scope="col" colspan="6">Lancamentos</th>
-						</tr>
-						<tr>
-		                	<th scope="col">Id</th>
-							<th scope="col">Tipo</th>
-							<th scope="col">Valor</th>
-							<th scope="col">Data</th>
-							<th scope="col">Observacao</th>
-							<th scope="col">Excluir</th>
-		                </tr>
-					</thead>
-					<tbody>
-						<c:forEach var="lancamento" items="${lancamentos}">
-							<tr>
-							<th class='align-middle' scope='row'>${lancamento.id}</th>
-							<td class='align-middle'>${lancamento.tipo}</td>
-							<td class='align-middle'>${lancamento.valor}</td>
-							<td class='align-middle'>${lancamento.data}</td>
-							<td class='align-middle'>${lancamento.observacao}</td>
-							<td class='align-middle'><a href=excluirLancamento?lancamento=${lancamento.id}><button type='button' class='btn btn-default'><span class='material-icons'>clear</span></button></td></a>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		
-	</div>
-	
-	
 	
 	
 	

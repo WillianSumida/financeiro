@@ -1,5 +1,8 @@
 package org.financeiro.controle;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.financeiro.modelo.User;
@@ -14,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class AutenticadorControle {
 	
-	private UserRepositorio repositorio;
+	private UserRepositorio userRepositorio;
 	private LancamentoRepositorio repositorioLan;
 	
 
 	@Autowired
-	public AutenticadorControle(UserRepositorio repositorio, LancamentoRepositorio repositorioLan) {
-		this.repositorio = repositorio;
+	public AutenticadorControle(UserRepositorio userRepositorio, LancamentoRepositorio repositorioLan) {
+		this.userRepositorio = userRepositorio;
 		this.repositorioLan = repositorioLan;
 	}
 	
@@ -30,31 +33,49 @@ public class AutenticadorControle {
 	}
 	
 	@RequestMapping("dashboard")
-	public String Dashboard(Model model, HttpSession sessao) {
-		User usuario = (User) sessao.getAttribute("usuario");
-
-		model.addAttribute("lancamentos", repositorioLan.getAllLancamentos(usuario));
+	public String Dashboard(Model model, HttpServletRequest request) {
+		String login = getCookieValue("cookie", "unknown", request);
+		
+		model.addAttribute("login" , login);
+		model.addAttribute("lancamentos", repositorioLan.getAllLancamentos(userRepositorio.getUsuario(login)));
 		return "dashboard";
 	}
 	
-	
-	
 	@RequestMapping(value = "autenticar", method = RequestMethod.POST)
-	public String autenticar(User usuario, HttpSession sessao) {
-		if(repositorio.autenticar(usuario)) {
-			
-			User user = repositorio.getUsuario(usuario.getLogin());
-			sessao.setAttribute("usuario", user);
-
-				return "redirect:dashboard";
+	public String autenticar(User usuario, HttpSession sessao, HttpServletResponse response) {
+		if(userRepositorio.autenticar(usuario)) {
+			Cookie cookie = new Cookie("cookie",usuario.getLogin());
+	        cookie.setMaxAge(60*60*1); 
+	        response.addCookie(cookie);
+			return "redirect:dashboard";
 		}
 		return "redirect:login";
 	}
 	
 	@RequestMapping("logout")
-	public String logout(HttpSession sessao) {
-		sessao.removeAttribute("usuario");
-		sessao.invalidate();
+	public String logout(HttpServletRequest request) {
+		Cookie cookie = getCookie("cookie", request);
+		cookie.setMaxAge(-1);
 		return "redirect:login";
 	}
+	
+	public static String getCookieValue(String cookieName,  String defaultValue, HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+	    for(int i=0; i<cookies.length; i++) {
+	      Cookie cookie = cookies[i];
+	      if (cookieName.equals(cookie.getName()))
+	        return(cookie.getValue());
+	    }
+	    return(defaultValue);
+	  }
+	
+	public static Cookie getCookie(String cookieName, HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+	    for(int i=0; i<cookies.length; i++) {
+	      Cookie cookie = cookies[i];
+	      if (cookieName.equals(cookie.getName()))
+	        return(cookie);
+	    }
+	    return(null);
+	  }
 }
