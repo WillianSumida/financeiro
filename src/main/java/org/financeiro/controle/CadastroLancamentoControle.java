@@ -32,15 +32,13 @@ public class CadastroLancamentoControle {
 	public String cadastrar(Lancamento lancamento, Model model, HttpServletRequest request) {
 		String login = getCookieValue("cookie", "unknown", request);
 		
-		System.out.println("--------------------------------");
-		System.out.println(userRepositorio.getUsuario(login));
-		
 		lancamento.setUser(userRepositorio.getUsuario(login));
 		lancamentoRepositorio.insert(lancamento);
 
 		model.addAttribute("login" , login);
 		model.addAttribute("lancamentos", lancamentoRepositorio.getAllLancamentos(userRepositorio.getUsuario(login)));
-	
+		model.addAttribute("total", lancamentoRepositorio.getTotal(lancamentoRepositorio.getAllLancamentos(userRepositorio.getUsuario(login))));
+		
 		return "dashboard";
 	}
 
@@ -50,7 +48,7 @@ public class CadastroLancamentoControle {
 		String login = getCookieValue("cookie", "unknown", request);
 		model.addAttribute("login" , login);
 		model.addAttribute("lancamentos", lancamentoRepositorio.getLancamentoTipo(tipo, userRepositorio.getUsuario(login)));
-		
+		model.addAttribute("total", lancamentoRepositorio.getTotal(lancamentoRepositorio.getLancamentoTipo(tipo, userRepositorio.getUsuario(login))));
 		return "dashboard";
 	}
 	
@@ -62,7 +60,7 @@ public class CadastroLancamentoControle {
 		
 		model.addAttribute("login" , login);
 		model.addAttribute("lancamentos", lancamentoRepositorio.getLancamentoData(mes, ano, userRepositorio.getUsuario(login)));
-		
+		model.addAttribute("total", lancamentoRepositorio.getTotal(lancamentoRepositorio.getLancamentoData(mes, ano, userRepositorio.getUsuario(login))));
 		return "dashboard";
 	}
 	
@@ -84,7 +82,7 @@ public class CadastroLancamentoControle {
 
 		model.addAttribute("login" , login);
 		model.addAttribute("lancamentos", lancamentoRepositorio.getAllLancamentos(userRepositorio.getUsuario(login)));
-	
+		model.addAttribute("total", lancamentoRepositorio.getTotal(lancamentoRepositorio.getAllLancamentos(userRepositorio.getUsuario(login))));
 		return "dashboard";
 	}
 	

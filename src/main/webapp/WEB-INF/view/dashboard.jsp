@@ -40,6 +40,14 @@
 </head>
 
 <body>
+
+<c:if test="${status}">
+	<script>swal("Falha ao entrar", "Login ou senha incorretos", "warning");</script>
+</c:if>
+
+
+
+
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
   		<a class="navbar-brand">Seja bem vindo (a), ${login}</a>
 	     <span class="navbar-text ml-auto">
@@ -50,35 +58,38 @@
          </span>
 	</nav>
 	
-	<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#listarLancamentoTipo">
-	  LISTAR TIPO
-	</button>
-	
-	<a href="dashboard"><button type="button" class="btn btn-primary">
-	  VER TUDO
-	</button>
-	</a>
-	
-	<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#listarLancamentoData">
-	  LISTAR DATA
-	</button>
 	
 	<div class="container">
-  		<div class="row">
-  		
-  		
-  		
-			<!-- <div class="col-sm d-flex align-items-center justify-content-center">
+		<div class="row justify-content-center mt-5">
+			<button type="submit" class="btn btn-primary mr-5" data-toggle="modal" data-target="#listarLancamentoTipo">
+			  LISTAR TIPO
+			</button>
+			
+			<a href="dashboard"><button type="button" class="btn btn-primary mr-5">
+			  VER TUDO
+			</button>
+			</a>
+			
+			<button type="submit" class="btn btn-primary mr-5" data-toggle="modal" data-target="#listarLancamentoData">
+			  LISTAR DATA
+			</button>
+		</div>
+	
+	
+	
+  		<div class="row">	
+			<!-- VALOR TOTAL DA EXIBIICAO ATUAL -->
+			<div class="col-sm d-flex align-items-center justify-content-center">
 			
 			<div class="col-sm">
 				<div class="container text-center mt-5-4">
-					<br><h1>Lancamentos</h1>
+					<br><h2>Gastos</h2>
 					<div class="row justify-content-center">
-					<h3>valores: R$ 11</h3>
+					<h3>Gasto total: R$ ${total}</h3>
 					</div>
 				</div>
 			</div>
-  		-->
+  		
   		
   		
   		

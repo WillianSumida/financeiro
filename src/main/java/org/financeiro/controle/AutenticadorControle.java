@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AutenticadorControle {
@@ -28,7 +29,20 @@ public class AutenticadorControle {
 	}
 	
 	@RequestMapping("login")
-	public String loginForm() {
+	public String loginForm(HttpServletRequest request, HttpServletResponse response, Model model) {
+		String status = request.getParameter("status");
+		
+		System.out.println("=============================");
+		System.out.println(status);
+		
+		
+		if(status != null) {
+			model.addAttribute("status", true);
+		}
+		else {
+			model.addAttribute("status", false);
+		}
+		
 		return "login";
 	}
 	
@@ -38,18 +52,20 @@ public class AutenticadorControle {
 		
 		model.addAttribute("login" , login);
 		model.addAttribute("lancamentos", repositorioLan.getAllLancamentos(userRepositorio.getUsuario(login)));
+		model.addAttribute("total" , repositorioLan.getTotal(repositorioLan.getAllLancamentos(userRepositorio.getUsuario(login))));
+		
 		return "dashboard";
 	}
 	
 	@RequestMapping(value = "autenticar", method = RequestMethod.POST)
-	public String autenticar(User usuario, HttpSession sessao, HttpServletResponse response) {
+	public String autenticar(User usuario, HttpSession sessao, HttpServletResponse response, Model model) {
 		if(userRepositorio.autenticar(usuario)) {
 			Cookie cookie = new Cookie("cookie",usuario.getLogin());
 	        cookie.setMaxAge(60*60*1); 
 	        response.addCookie(cookie);
 			return "redirect:dashboard";
 		}
-		return "redirect:login";
+		return "redirect:login?status=error";
 	}
 	
 	@RequestMapping("logout")

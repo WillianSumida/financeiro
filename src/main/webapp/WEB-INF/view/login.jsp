@@ -1,24 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
-</head>
-<body>
-<form method=post action=autenticar>
-Login:<input type=text name=login>
-<br>
-Senha:<input type=password name=senha>
-<br>
-<input type=submit value=Logar>
-<a href="cadastroForm" >CADASTRAR</a>
-</form>
-</body>
-</html>
--->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -129,11 +112,18 @@ span.text-center {
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 	</head>
 	
 <body>
+
+	<c:if test="${status}">
+		<script> swal("Falha ao entrar!", "Login ou senha incorretos", "error"); </script>
+	</c:if>
+
+
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  		<a class="navbar-brand">Seja bem vindo (a)</a>
+  		<a class="navbar-brand">Financeiro</a>
 
 	</nav>
 	

@@ -49,12 +49,19 @@ public class LancamentoRepositorio {
 		String inicio = ano+"-"+mes+"-01";
 		String fim = ano+"-"+mes+"-31";
 		
-		System.out.println("////////////////////////");
-		System.out.println(inicio);
-		System.out.println(fim);
-		
 		TypedQuery<Lancamento> query = manager.createQuery("select c from Lancamento c where data between ?1 AND ?2 AND  user_login=?3", Lancamento.class);
 		query.setParameter(1, inicio).setParameter(2,fim).setParameter(3, user.getLogin());
 		return query.getResultList();
+	}
+	
+	
+	public float getTotal(List<Lancamento> lista) {
+		float total = 0;
+		
+		for (Lancamento objeto : lista) {
+			total+=objeto.getValor();
+		}
+		
+		return  total;
 	}
 }
