@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Financeiro</title>
+<title>CashFlow</title>
 
 <!-- Google font -->
 <link href="https://fonts.googleapis.com/css?family=Hind:400,700"

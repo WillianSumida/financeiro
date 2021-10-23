@@ -27,7 +27,7 @@ a {
 }
 
 h5 {
-    color: #ff0147;
+    color: #75FF01;
     margin-bottom: 3px;
     font-weight: bold
 }
@@ -63,8 +63,8 @@ input[type=password], input[type=text] {
     width: 100%;
     border-radius: 30px;
     border: none;
-    background: linear-gradient(to right, rgba(249, 0, 104, 1) 0%, rgba(247, 117, 24, 1) 100%);
-    background: -webkit-linear-gradient(left, rgba(249, 0, 104, 1) 0%, rgba(247, 117, 24, 1) 100%)
+    background: linear-gradient(to right, rgba(69, 211, 104, 1) 0%, rgba(69, 157, 24, 1) 100%);
+    background: -webkit-linear-gradient(left, rgba(69, 211, 104, 1) 0%, rgba(69, 157, 24, 1) 100%)
 }
 
 .text-left {
@@ -122,7 +122,7 @@ span.text-center {
 	        <div class="col-md-6 mx-auto py-4 px-0">
 	            <div class="card p-0">
 	                <div class="card-title text-center">
-	                    <h5 class="mt-5">Financeiro</h5> <small class="para">Logar</small>
+	                    <h5 class="mt-5">CashFlow</h5> <small class="para">Logar</small>
 	                </div>
 	                <form class="signup" method=post action=cadastrar>
 	                    <div class="form-group"><input type="text" class="form-control" placeholder="Login" name="login"></div>

@@ -30,13 +30,8 @@ public class CadastroUsuarioControle {
 	@Transactional
 	@RequestMapping(value = "cadastrar", method=RequestMethod.POST)
 	public String cadastrar(User usuario) {
-		try {
-			repositorio.cadastrar(usuario);
-			return "login";
-		}
-		catch (DataIntegrityViolationException e){
-			return "login?status=error";
-		}
+		repositorio.cadastrar(usuario);
+		return "login";
 	}
 	
 	
